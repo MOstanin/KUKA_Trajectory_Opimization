@@ -2,10 +2,10 @@
 tic
 gen_points3;
 
-% lbr = importrobot('iiwa14.urdf');
-% lbr.DataFormat = 'row';
-% % Set the gravity 
-% lbr.Gravity = [0 0 -9.80];
+lbr = importrobot('iiwa14.urdf');
+lbr.DataFormat = 'row';
+% Set the gravity 
+lbr.Gravity = [0 0 -9.80];
 
 M=makehgtform('translate',point(1,:));
 Rz=makehgtform('zrotate',ori_in_cloud(1,1));
@@ -80,12 +80,12 @@ for i=1:(N(2)-1)
             vec_w2(k)=sqrt((table_of_points(c2+k-1,1)-table_of_points(j,1))^2+...
                 (table_of_points(c2+k-1,2)-table_of_points(j,2))^2+...
                 (table_of_points(c2+k-1,3)-table_of_points(j,3))^2);
-%             vec_wE(k)=calc_energy(lbr, [table_of_q(j,:); table_of_q(c2+k-1,:)], dt);
+            vec_wE(k)=calc_energy(lbr, [table_of_q(j,:); table_of_q(c2+k-1,:)], dt);
         end
         
         G1=addedge(G1,vec_from,vec_to,vec_w1);
         G2=addedge(G2,vec_from,vec_to,vec_w2);
-%         GE=addedge(GE,vec_from,vec_to,vec_wE);
+        GE=addedge(GE,vec_from,vec_to,vec_wE);
         
         clear vec_from vec_to vec_w1 vec_w2 vec_wE
     end

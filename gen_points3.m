@@ -1,34 +1,34 @@
 % clear
 % close all
 hold on
-load('track_opt_with_d_and_ori2.mat');
-% load('track_opt_example.mat');
+% load('track_opt_with_d_and_ori2.mat');
+% % load('track_opt_example.mat');
+% 
+% N=size(track_opt);
+% 
+% % --- zero
+% trans_lvl_x=round((track_opt(1,3)+track_opt(N(1),3))*1000/2+550);
+% trans_lvl_y=0;
+% trans_lvl_z=round(100-(track_opt(1,2)+track_opt(N(1),2))*1000/2);
+% 
+% 
+% for i=1:N(1)
+%     point(i,:)=[trans_lvl_x-track_opt(i,3)*1000, trans_lvl_y-track_opt(i,1)*1000,...
+%         trans_lvl_z+track_opt(i,2)*1000];
+% end
 
-N=size(track_opt);
 
-% --- zero
-trans_lvl_x=round((track_opt(1,3)+track_opt(N(1),3))*1000/2+550);
-trans_lvl_y=0;
-trans_lvl_z=round(100-(track_opt(1,2)+track_opt(N(1),2))*1000/2);
-
-
-for i=1:N(1)
-    point(i,:)=[trans_lvl_x-track_opt(i,3)*1000, trans_lvl_y-track_opt(i,1)*1000,...
-        trans_lvl_z+track_opt(i,2)*1000];
-end
-
-
-% load('testCloudFusion.mat'); N=size(point);
+load('testCloudFusion.mat'); N=size(point);
 
 for i=1:N(1)
     ori(i,:)=[track_opt_ori(i,1), -track_opt_ori(i,2), track_opt_ori(i,3)];
 end
 
 
-% sigma=20;
-% k=250;
-% kn=50;
-% dt=0.1;  %0.1~sigma=20 
+sigma=10;
+k=500;
+kn=100;
+dt=0.1;  %0.1~sigma=20 
 
 num_p_in_cloud(1)=1;
 pn=N(1);
@@ -242,10 +242,10 @@ c_cloud=c;
 
 p=plot3(point(:,1),point(:,2),point(:,3),'g','LineWidth',2);
 
-% for i=1:c_cloud
-%     a=plot3(cloud(i,1:num_p_in_cloud(i),1),cloud(i,1:num_p_in_cloud(i),2),...
-%         cloud(i,1:num_p_in_cloud(i),3),'o','LineWidth',0.5);
-% end
+for i=1:c_cloud
+    a=plot3(cloud(i,1:num_p_in_cloud(i),1),cloud(i,1:num_p_in_cloud(i),2),...
+        cloud(i,1:num_p_in_cloud(i),3),'o','LineWidth',0.5);
+end
 
 xlabel('X, mm');
 ylabel('Y, mm');
@@ -269,7 +269,7 @@ end
 %
 % plot3(P(:,1),P(:,2),P(:,3),'o')
 
-kk = boundary(P,0.7);
+kk = boundary(P,0.8);
 
 trisurf(kk,P(:,1),P(:,2),P(:,3),'Facecolor','red','FaceAlpha',0.2,'LineStyle','none')
 
